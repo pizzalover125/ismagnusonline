@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is Magnus Carlsen Online</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181818;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: white;
+        }
+
+        #status {
+            font-weight: bold;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .online {
+            color: green;
+            background-color: #d4f0db;
+        }
+
+        .offline {
+            color: red;
+            background-color: #f0d4d4;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Magnus Carlsen is <span id="status" class="offline">offline</span> on Lichess.</h1>
+    <script>
+        $.getJSON("https://lichess.org/api/users/status?ids=DrDrunkenstein,DrNykterstein,STL_Carlsen,MagnusCarlsen,DannytheDonkey,manwithavan,damnsaltythatsport,DrGrekenstein", function (data) {
+            console.log(data);
+            let onlinePlayers = data.filter(player => player.online);
+            if (onlinePlayers.length > 0) {
+                $("#status").text("online").removeClass("offline").addClass("online");
+            } else {
+                $("#status").text("offline").removeClass("online").addClass("offline");
+            }
+        });
+    </script>
+</body>
+
+</html>
